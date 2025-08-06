@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// -------------------- Task 1 --------------------
+class DeliveryTimeEstimator {
+public:
+    // Overloaded function: takes distance
+    int estimateTime(int distanceInKm) {
+        return (distanceInKm / 10) + 1;
+    }
+
+    // Overloaded function: takes city name
+    int estimateTime(string cityName) {
+        if (cityName == "Cairo") return 2;
+        else if (cityName == "Alex") return 3;
+        else return 5;
+    }
+};
+
+// -------------------- Task 2 --------------------
+class Delivery {
+public:
+    virtual double calculateCost(double weight) { // Virtual Function
+        return 0;
+    }
+};
+
+class StandardDelivery : public Delivery {
+public:
+    double calculateCost(double weight) override {
+        return 10 + (weight * 2);
+    }
+};
+
+class ExpressDelivery : public Delivery {
+public:
+    double calculateCost(double weight) override {
+        return 20 + (weight * 3);
+    }
+};
+
+// -------------------- main function --------------------
+int main() {
+    // ----- Task 1 Demo -----
+    DeliveryTimeEstimator estimator;
+    cout << "Delivery time for 50 km: "
+         << estimator.estimateTime(50) << " hours" << endl;
+    cout << "Delivery time for Cairo: "
+         << estimator.estimateTime("Cairo") << " hours" << endl;
+    cout << "Delivery time for Aswan: "
+         << estimator.estimateTime("Aswan") << " hours" << endl;
+
+    cout << "-----------------------------------" << endl;
+
+    // ----- Task 2 Demo -----
+    Delivery* deliveryPtr;  // Base class pointer
+
+    StandardDelivery standard;
+    deliveryPtr = &standard;
+    cout << "Standard Delivery cost (weight 5 kg): "
+         << deliveryPtr->calculateCost(5) << " EGP" << endl;
+
+    ExpressDelivery express;
+    deliveryPtr = &express;
+    cout << "Express Delivery cost (weight 5 kg): "
+         << deliveryPtr->calculateCost(5) << " EGP" << endl;
+
+    return 0;
+}
+______________________________________________________________
+
+Delivery time for 50 km: 6 hours
+Delivery time for Cairo: 2 hours
+Delivery time for Aswan: 5 hours
+-----------------------------------
+Standard Delivery cost (weight 5 kg): 20 EGP
+Express Delivery cost (weight 5 kg): 35 EGP
+
+
+=== Code Execution Successful ===
