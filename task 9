@@ -1,81 +1,50 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-// -------------------- Task 1 --------------------
-class DeliveryTimeEstimator {
+// ----------- Class Math -----------
+class Math {
 public:
-    // Overloaded function: takes distance
-    int estimateTime(int distanceInKm) {
-        return (distanceInKm / 10) + 1;
-    }
-
-    // Overloaded function: takes city name
-    int estimateTime(string cityName) {
-        if (cityName == "Cairo") return 2;
-        else if (cityName == "Alex") return 3;
-        else return 5;
+    // دالة static تجمع عددين
+    static int add(int a, int b) {
+        return a + b;
     }
 };
 
-// -------------------- Task 2 --------------------
-class Delivery {
+// ----------- Class Box -----------
+class Box {
+private:
+    int length;   // متغير خاص
+
 public:
-    virtual double calculateCost(double weight) { // Virtual Function
-        return 0;
+    // Constructor يضع القيمة = 10
+    Box() {
+        length = 10;
     }
+
+    // تعريف friend function
+    friend void printLength(Box b);
 };
 
-class StandardDelivery : public Delivery {
-public:
-    double calculateCost(double weight) override {
-        return 10 + (weight * 2);
-    }
-};
+// Friend Function تعريفها خارج الكلاس
+void printLength(Box b) {
+    cout << "Length = " << b.length << endl;
+}
 
-class ExpressDelivery : public Delivery {
-public:
-    double calculateCost(double weight) override {
-        return 20 + (weight * 3);
-    }
-};
-
-// -------------------- main function --------------------
+// ----------- Main Function -----------
 int main() {
-    // ----- Task 1 Demo -----
-    DeliveryTimeEstimator estimator;
-    cout << "Delivery time for 50 km: "
-         << estimator.estimateTime(50) << " hours" << endl;
-    cout << "Delivery time for Cairo: "
-         << estimator.estimateTime("Cairo") << " hours" << endl;
-    cout << "Delivery time for Aswan: "
-         << estimator.estimateTime("Aswan") << " hours" << endl;
+    // استدعاء الدالة static من Math بدون كائن
+    cout << "Sum = " << Math::add(5, 7) << endl;
 
-    cout << "-----------------------------------" << endl;
-
-    // ----- Task 2 Demo -----
-    Delivery* deliveryPtr;  // Base class pointer
-
-    StandardDelivery standard;
-    deliveryPtr = &standard;
-    cout << "Standard Delivery cost (weight 5 kg): "
-         << deliveryPtr->calculateCost(5) << " EGP" << endl;
-
-    ExpressDelivery express;
-    deliveryPtr = &express;
-    cout << "Express Delivery cost (weight 5 kg): "
-         << deliveryPtr->calculateCost(5) << " EGP" << endl;
+    // إنشاء كائن من Box
+    Box box1;
+    // استدعاء friend function
+    printLength(box1);
 
     return 0;
 }
-______________________________________________________________
-
-Delivery time for 50 km: 6 hours
-Delivery time for Cairo: 2 hours
-Delivery time for Aswan: 5 hours
------------------------------------
-Standard Delivery cost (weight 5 kg): 20 EGP
-Express Delivery cost (weight 5 kg): 35 EGP
+__________________________________________________________________
+Sum = 12
+Length = 10
 
 
 === Code Execution Successful ===
